@@ -43,14 +43,10 @@ def add_missing_descriptions(in_reports, out_reports, api_key, url):
     new_bug_reports = {}
     b = bugzilla.Bugzilla(url=url, api_key=api_key)
     for key in tqdm(empty_descriptions_keys):
-        print(key)
         current_bug_id = bug_reports[key]['bug_report']['bug_id']
-        print("Current bug id", current_bug_id)
         try:
             time.sleep(1)
-            print("boom chika", current_bug_id)
             comments = b.get_comments(current_bug_id)
-            print("shaka laka: ", comments)
             description = find_description(comments['bugs'][current_bug_id]['comments'])
             bug_reports[key]['bug_report']['description'] = description
             new_bug_reports[key] = bug_reports[key]
