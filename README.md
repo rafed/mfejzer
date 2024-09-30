@@ -38,7 +38,9 @@ git fetch origin refs/notes/graph:refs/notes/graph
 ```
   * To add missing bug reports descriptions adjust results of "process_bug_reports" using additional script, and use result json file in in the next step:
 ```
-./add_missing_description_as_separate_reports.py aspectj_base.json aspectj_base_with_descriptions.json BUGZILLA_API_KEY BUGZILLA_API_URL
+./add_missing_description_as_separate_reports.py aspectj_base.json aspectj_base_with_descriptions.json BUGZILLA_API_KEY BUGZILLA_API_URL   
+
+API_URL=https://bugs.eclipse.org/bugs/rest/
 ```
 * Calculate features - result files will be stored using prefix "aspectj":
 ```

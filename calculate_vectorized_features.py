@@ -146,7 +146,7 @@ def process(bug_reports, data_prefix, bug_report_file_path):
     for fixing_commit in sorted_commits:
         work.append((data_prefix, fixing_commit, bug_report_file_path, max_frequency))
 
-    pool = Pool(12, maxtasksperchild=1)
+    pool = Pool(8, maxtasksperchild=1)
     r = list(tqdm(pool.imap(_f, work), total=len(work)))
     print("r", len(r))
 #    _f(work[0])

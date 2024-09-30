@@ -1,0 +1,13 @@
+bitmap==0.0.6
+bugzilla==1.0.0
+joblib
+networkx
+nltk
+numpy
+pandas
+scikit-learn
+scikit-optimize
+scipy
+tqdm==4.32.2
+unqlite
+requests

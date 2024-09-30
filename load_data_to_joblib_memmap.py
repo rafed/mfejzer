@@ -31,8 +31,12 @@ def fix_index(fold_testing):
         if level_1_uniq > max_level_1:
             max_level_1 = level_1_uniq
 
-        fold_testing[fold].index.set_levels(range(fold * max_level_0, (fold + 1) * max_level_0), level=0, inplace=True)
-        fold_testing[fold].index.set_levels(range(fold * max_level_1, (fold + 1) * max_level_1), level=1, inplace=True)
+        fold_testing[fold].index = fold_testing[fold].index.set_levels(
+            range(fold * max_level_0, (fold + 1) * max_level_0), level=0
+        )
+        fold_testing[fold].index = fold_testing[fold].index.set_levels(
+            range(fold * max_level_1, (fold + 1) * max_level_1), level=1
+        )
 
         fold_testing[fold] = fold_testing[fold].astype(np.float32, copy=False)
 

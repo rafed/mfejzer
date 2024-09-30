@@ -200,7 +200,7 @@ def vectorize(ast_cache, bug_reports, data_prefix):
     print("vectorized_data shape", vectorized_data.shape)
 
 
-    feature_names = vectorizer.get_feature_names()
+    feature_names = vectorizer.get_feature_names_out()
     feature_names_lenghts_dict = {}
     for i, feature_name in enumerate(feature_names):
         feature_names_lenghts_dict[i] = len(feature_name)

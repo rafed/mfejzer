@@ -28,7 +28,7 @@ from sklearn.model_selection import KFold
 from sklearn.utils import safe_mask
 from skopt import *
 
-from metrics import calculate_metric_results
+from metrics import calculate_metric_results, calculate_metric_results2
 from train_utils import eprint
 
 feature_columns = [
@@ -140,7 +140,7 @@ def process(ptemplate, fold_number, fold_testing, fold_training, file_prefix):
     try:
         return {
             "name": ptemplate.name,
-            "results": calculate_metric_results(all_results_df),
+            "results": calculate_metric_results2(all_results_df),
         }
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -370,12 +370,12 @@ def size_selectf_only_fixes_p(df, score, perc=0.25, smallest=True, largest=False
 
 def get_skmodels():
     sgd_loss = [
-        "squared_loss",
+        "squared_error",
         "huber",
         "epsilon_insensitive",
         "squared_epsilon_insensitive",
     ]
-    sgd_penalty = ["none", "l2", "l1", "elasticnet"]
+    sgd_penalty = [None, "l2", "l1", "elasticnet"]
     alpha = 10.0**-np.arange(4, 5)
     return [
         SGDRegressor(max_iter=1000, shuffle=False, loss=l, penalty=p, alpha=a)
@@ -585,7 +585,7 @@ class Adaptive_Process(object):
 
     def prepare_regressor_name(self, current_reg_model):
         if isinstance(current_reg_model, SGDRegressor):
-            name = 'SGDRegressor' + '_' + current_reg_model.loss + '_' + current_reg_model.penalty + '_' + \
+            name = 'SGDRegressor' + '_' + current_reg_model.loss + '_' + str(current_reg_model.penalty) + '_' + \
                    str(current_reg_model.alpha) + '_' + str(current_reg_model.shuffle)
         else:
             name = self.reg_model_name

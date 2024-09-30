@@ -74,7 +74,7 @@ def calculate_feature_3_for_each_fix(fixes_list, data_prefix, bug_report_file_pa
     for fixing_commit in fixes_list:
         work.append((data_prefix, fixing_commit[0], fixing_commit[1], d))
     
-    pool = Pool(12, maxtasksperchild=1)
+    pool = Pool(6, maxtasksperchild=1)
     r = list(tqdm(pool.imap(_f, work), total=len(work)))
     # print(_f(work[0]))
 
