@@ -91,6 +91,7 @@ def process(ptemplate, fold_number, fold_testing, fold_training, file_prefix):
 
         min_fix_result = r[r["used_in_fix"] == 1.0]["result"].min()
         minimal_reasonable_set = r[r["result"] >= min_fix_result].copy()
+        # minimal_reasonable_set.reset_index(inplace=True)
         del r
         results_list.append(minimal_reasonable_set)
 
@@ -101,7 +102,7 @@ def process(ptemplate, fold_number, fold_testing, fold_training, file_prefix):
     best_regression_log = ptemplate.best_regression_log.copy()
 
     all_results_df = pd.concat(results_list)
-    all_results_df.reset_index(level=1, drop=True, inplace=True)
+    # all_results_df.reset_index(level=1, drop=True, inplace=True)
 
     eprint(training_time_list)
     time_sum = sum([time for time, bug_reports_number, file_number in training_time_list])
@@ -654,6 +655,9 @@ class Adaptive_Process(object):
 
         r = df[["used_in_fix", "f1"]].copy(deep=False)
         r["result"] = result
+
+        # r.reset_index(level=["bid", "fid"], inplace=True)
+        print(r.to_string())
 
         return r
 

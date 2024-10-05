@@ -95,7 +95,7 @@ def calculate_metrics_2(verification_df, k_range=range(1, 21)):
     accuracy_at_k = dict.fromkeys(k_range, 0)
     bug_report_number = 0
     for bug_report, bug_report_files_dataframe in verification_df.groupby(level=0, sort=False):
-        # print(bug_report_files_dataframe)
+        print("br, brf_df: ", bug_report, bug_report_files_dataframe.to_string())
         min_fix_result = bug_report_files_dataframe[bug_report_files_dataframe['used_in_fix'] == 1.0]['result'].min()
         bug_report_files_dataframe2 = bug_report_files_dataframe[bug_report_files_dataframe["result"] >= min_fix_result]
         sorted_df = bug_report_files_dataframe2.sort_values(ascending=False, by=['result'])
@@ -103,10 +103,11 @@ def calculate_metrics_2(verification_df, k_range=range(1, 21)):
             sorted_df = bug_report_files_dataframe.copy().sort_values(ascending=False, by=['result'])
             # print((bug_report_files_dataframe['used_in_fix'] == 1.0).sum())
 
-        print("Bug ID: {}".format(bug_report))
+        print("sorted df: ", sorted_df.to_string())
+        # print("Bug ID: {}".format(bug_report))
         # print("Ranking List (file results with 'used_in_fix' status):")
         # print(sorted_df['result'].tolist())
-        print(sorted_df['used_in_fix'].tolist())
+        # print(sorted_df['used_in_fix'].tolist())
         print("-" * 40)
 
         precision_at_k = []

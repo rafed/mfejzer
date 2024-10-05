@@ -38,6 +38,8 @@ def fix_index(fold_testing):
             range(fold * max_level_1, (fold + 1) * max_level_1), level=1
         )
 
+        # print(f"DataFrame before conversion to float32 for fold {fold}:\n{fold_testing[fold].to_string()}")
+        # fold_testing[fold].to_csv(f"mew_fold_{fold}_before_float32.csv")
         fold_testing[fold] = fold_testing[fold].astype(np.float32, copy=False)
 
 

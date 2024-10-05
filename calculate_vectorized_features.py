@@ -192,6 +192,9 @@ def process_bug_report(data_prefix, bug_report_full_sha, bug_report_file_path, m
     else:
         current_bug_report_summary = retrieve_summary(bug_reports, bug_report_full_sha)['bug_report']['summary']
 
+    # print("bug_report_id: ", bug_report_id)
+    # print("current_bug_report_summary: ", current_bug_report_summary)
+
     feature_3_data = sparse.load_npz(data_prefix + '_' + bug_report_id + '_feature_3_data.npz')
     with open(data_prefix + '_' + bug_report_id + '_feature_3_index_lookup', 'r') as feature_3_file:
         feature_3_file_lookup = json.load(feature_3_file)
@@ -206,8 +209,10 @@ def process_bug_report(data_prefix, bug_report_full_sha, bug_report_file_path, m
 
     if bug_report_id in bug_reports:
         fixed_filenames = bug_reports[bug_report_id[0:7]]['commit']['diff'].keys()
+        # print(f"If-> bug_report_id: {bug_report_id}, fixed_filenames: {fixed_filenames}")
     else:
         fixed_filenames = retrieve_summary(bug_reports, bug_report_full_sha)['commit']['diff'].keys()
+        # print(f"Else-> bug_report_id: {bug_report_id}, fixed_filenames: {fixed_filenames}")
 
     features = []
     features_files = []
@@ -270,6 +275,12 @@ def process_bug_report(data_prefix, bug_report_full_sha, bug_report_file_path, m
         features.append([f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, used_in_fix])
         features_files.append(current_file_sha)
 
+    #     print("current_file_name: ", current_file_name)
+    #     print("current_file_sha: ", current_file_sha)
+    #     print("used_in_fix: ", used_in_fix)
+
+    # print("*********")
+    
     ast_cache_collection.close()
 
     sparse_features = sparse.csr_matrix(features)
