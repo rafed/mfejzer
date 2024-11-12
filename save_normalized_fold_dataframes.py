@@ -90,12 +90,26 @@ def process(bug_reports, file_prefix):
 
             fold_testing_data[current_fold].append(df)
             fold_testing_keys[current_fold].append(commit)
+        else:
+            print("Commit %s has no relevant files" % commit)
 
     fold_training = {}
     for fold_key, training_dataframes in fold_training_data.items():
         training_keys = fold_training_keys[fold_key]
         training_dataframe = pd.concat(training_dataframes, keys=training_keys)
         fold_training[fold_key] = training_dataframe
+
+    for fold_key, testing_commits in fold_testing_keys.items():
+        print("\nFold %d: Testing Bug Report Details" % fold_key)
+        print(len(testing_commits))
+        for commit in testing_commits:
+            bug_details = bug_reports.get(commit)
+            print("Commit ID: %s" % commit)
+            print("ID: %s" % bug_details['bug_report']['bug_id'])
+            print("Bug ID: %s" % bug_details['bug_report']['id'])
+            print("Bug Report Summary: %s" % bug_details['bug_report']['summary'])
+            print("Bug Report Timestamp: %s" % bug_details['bug_report']['timestamp'])
+            print("-------")
 
     min_dict = {}
     max_dict = {}
@@ -105,6 +119,9 @@ def process(bug_reports, file_prefix):
         testing_keys = fold_testing_keys[fold_key]
         testing_dataframe = pd.concat(testing_dataframes, keys=testing_keys)
         fold_testing[fold_key] = testing_dataframe
+
+        # print(f"{fold_key} DataFrame Shape: {testing_dataframe.shape}")
+        # testing_dataframe.to_csv(f"mew_save_normalized_fold_dataframes-{fold_key}.csv")
 
         mm_df = testing_dataframe.drop('used_in_fix', axis=1)
         min_dict[fold_key] = pd.DataFrame(mm_df.min()).transpose()
@@ -146,7 +163,8 @@ def save_normalized_data(file_prefix, fold_number, fold_testing, fold_training, 
         normalized_df['used_in_fix'] = df['used_in_fix']
         fold_testing[k] = normalized_df
         normalized_df.to_pickle(file_prefix + '_normalized_testing_fold_' + str(k))
-        print(normalized_df[normalized_df > 1.0].count())
+        # print(normalized_df[normalized_df > 1.0].count())
+        # normalized_df.to_csv(f"mew_normalized_df_fold_{k}.csv")
     info = {'fold_number': fold_number}
     print(info)
     with open(file_prefix + '_fold_info', 'w') as info_file:
@@ -177,7 +195,7 @@ def sort_bug_reports_by_db_id(bug_reports):
     commits = []
     for index, commit in enumerate(bug_reports):
         sha = bug_reports[commit]['commit']['metadata']['sha'].replace('commit ', '').strip()
-        timestamp = bug_reports[commit]['bug_report']['timestamp']
+        timestamp = bug_reports[commit]['commit']['metadata']['timestamp']
         commits.append((commit, timestamp))
 
     sorted_commits = sorted(commits, key=itemgetter(1))

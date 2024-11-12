@@ -168,6 +168,7 @@ def fix_commit_metadata(data):
             n_skipped = n_skipped + 1
             continue
 
+        print("the data: ", data[commit])
         trim_commit_info(data[commit]['commit']['metadata'])
         data[commit]['commit']['metadata']['timestamp'] = \
             datetime_to_timestamp(convert_commit_date(
@@ -387,6 +388,7 @@ def trim_commit_info(metadata):
         }
     """
     ## TODO: passthru e.g. via .update(), maybe OrderedDict
+    print("Rafu: ", metadata)
     metadata.update({
         'sha': metadata['sha'].replace('commit ','').strip(),
         'author': metadata['author'].replace('Author: ','').strip(),

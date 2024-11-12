@@ -83,7 +83,7 @@ def calculate_graph_features_for_each_fix(fixes_list, data_prefix, repository_pa
     for fixing_commit in fixes_list:
         work.append((data_prefix, fixing_commit[0], fixing_commit[1], repository_path, d))
 
-    pool = Pool(6, maxtasksperchild=1)
+    pool = Pool(12, maxtasksperchild=1)
     r = list(tqdm(pool.imap(_f, work), total=len(work)))
     # print(_f(work[0]))
 
