@@ -53,7 +53,7 @@ def main():
 
 def process(bug_reports, file_prefix):
     sorted_commits = sort_bug_reports_by_db_id(bug_reports)
-    # print(sorted_commits[0:5])
+    print(sorted_commits[0:10])
     #
     # exit()
     fold_training_data = defaultdict(list)
@@ -62,7 +62,7 @@ def process(bug_reports, file_prefix):
     fold_testing_data = defaultdict(list)
     fold_testing_keys = defaultdict(list)
 
-    fold_size = 500
+    fold_size = int(len(sorted_commits)*0.6)
 
     fold_number = len(sorted_commits) // fold_size
 
@@ -91,7 +91,19 @@ def process(bug_reports, file_prefix):
             fold_testing_data[current_fold].append(df)
             fold_testing_keys[current_fold].append(commit)
         else:
-            print("Commit %s has no relevant files" % commit)
+            print("not fixable",commit)
+            
+    for fold_key, testing_commits in fold_testing_keys.items():
+        print("\nFold %d: Testing Bug Report Details" % fold_key)
+        print(len(testing_commits))
+        for commit in testing_commits:
+            bug_details = bug_reports.get(commit)
+            print("Commit ID: %s" % commit)
+            print("ID: %s" % bug_details['bug_report']['bug_id'])
+            print("Bug ID: %s" % bug_details['bug_report']['id'])
+            print("Bug Report Summary: %s" % bug_details['bug_report']['summary'])
+            print("Bug Report Timestamp: %s" % bug_details['bug_report']['timestamp'])
+            print("-------")
 
     fold_training = {}
     for fold_key, training_dataframes in fold_training_data.items():

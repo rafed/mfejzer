@@ -60,6 +60,6 @@ echo "[*] Running load_data_to_joblib_memmap.py"
 ./load_data_to_joblib_memmap.py "$PROJECT_NAME"
 
 echo "[*] Running train_adaptive.py"
-./train_adaptive.py "$PROJECT_NAME"
+./train_adaptive.py "$PROJECT_NAME" > "mew_${PROJECT_NAME}.txt"
 
 deactivate
