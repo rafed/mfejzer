@@ -62,7 +62,7 @@ def main():
 
     data_filename_memmap = os.path.join(folder, "data_memmap")
     fold_number, fold_testing, fold_training = load(data_filename_memmap, mmap_mode="r")
-
+    print("foldnumber:", fold_number)
     models = [Adaptive_Process()]
     results = []
     for m in models:
@@ -85,6 +85,7 @@ def process(ptemplate, fold_number, fold_testing, fold_training, file_prefix):
     for i in range(fold_number):
         r = _process(ptemplate, fold_training[i], fold_testing[i + 1])
         if r is None:
+            print('r is None')
             del ptemplate
             gc.collect()
             return None

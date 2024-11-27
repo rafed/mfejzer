@@ -56,7 +56,7 @@ def retrieve_metadata(repository, commit):
     author = None
     date = None
     message = ''
-    cmd = 'git -C ' + repository + ' show -s ' + commit
+    cmd = 'git -C ' + repository + ' show -s ' + commit + '^0'
     show_lines = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read().decode('latin-1').split('\n')
     for index, line in enumerate(show_lines):
         if index == 0:
@@ -72,7 +72,7 @@ def retrieve_metadata(repository, commit):
 
 
 def retrieve_diff(repository, commit, ext='.java'):
-    cmd = 'git -C ' + repository + ' diff-tree --no-commit-id --name-only -r ' + commit
+    cmd = 'git -C ' + repository + ' diff-tree --no-commit-id --name-only -r ' + commit + '^0'
     #    print cmd
     files = {}
     diff_tree_lines = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read().decode('latin-1').split('\n')
@@ -84,7 +84,7 @@ def retrieve_diff(repository, commit, ext='.java'):
 
 
 def retrieve_diff_on_filepath(repository, commit, filepath):
-    cmd = 'git -C ' + repository + ' diff --unified=0 --no-prefix ' + commit + '^ ' + commit + ' -- ' + filepath
+    cmd = 'git -C ' + repository + ' diff --unified=0 --no-prefix ' + commit + '^0^ ' + commit + '^0' + ' -- ' + filepath
     diff_lines = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read().decode('latin-1')
     return diff_lines
 

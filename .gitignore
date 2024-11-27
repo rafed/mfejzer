@@ -1,1 +1,10 @@
 *.pyc
+.DS_Store
+
+tomcat_*
+birt_*
+swt_*
+aspectj_*
+eclipse_platform_ui_*
+jdt_*
+joblib_memmap_*

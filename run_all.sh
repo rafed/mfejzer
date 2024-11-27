@@ -18,7 +18,7 @@ echo "[*] Running process_bug_reports.py"
 ./process_bug_reports.py "$XML_FILE" "$DATASET_DIR" "${PROJECT_NAME}_base.json"
 
 deactivate
-source ./env2/bin/activate
+source ./env2/bin/activate 
 
 echo "[*] Running fix_and_augment.py"
 ./fix_and_augment.py "${PROJECT_NAME}_base.json" "$DATASET_DIR" > "${PROJECT_NAME}_aug.json"
@@ -60,6 +60,6 @@ echo "[*] Running load_data_to_joblib_memmap.py"
 ./load_data_to_joblib_memmap.py "$PROJECT_NAME"
 
 echo "[*] Running train_adaptive.py"
-./train_adaptive.py "$PROJECT_NAME" > "mew_${PROJECT_NAME}.txt"
+./train_adaptive.py "$PROJECT_NAME" > "result_${PROJECT_NAME}.txt"
 
 deactivate

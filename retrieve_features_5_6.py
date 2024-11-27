@@ -74,7 +74,7 @@ def retrieve_features_5_6_for_each_fix(fixes_list, data_prefix, bug_report_file_
     for fixing_commit in fixes_list:
         work.append((data_prefix, fixing_commit[0], fixing_commit[1], d))
 
-    pool = Pool(12, maxtasksperchild=1)
+    pool = Pool(10, maxtasksperchild=1)
     r = list(tqdm(pool.imap(_f, work), total=len(work)))
     # print(_f(work[0]))
     max_recency_array = np.array(list(map(lambda x: x[1], r)))
