@@ -30,13 +30,13 @@ deactivate
 source ./env3/bin/activate
 
 echo "[*] Running create_ast_cache.py"
-./create_ast_cache.py "$DATASET_DIR" "${PROJECT_NAME}.json" "$PROJECT_NAME"
+./create_ast_cache.py "$DATASET_DIR" "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_cast_${PROJECT_NAME}.txt"
 
 echo "[*] Running vectorize_ast.py"
-./vectorize_ast.py "${PROJECT_NAME}.json" "$PROJECT_NAME"
+./vectorize_ast.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_vast_${PROJECT_NAME}.txt"
 
 echo "[*] Running vectorize_enriched_api.py"
-./vectorize_enriched_api.py "${PROJECT_NAME}.json" "$PROJECT_NAME"
+./vectorize_enriched_api.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_ve_${PROJECT_NAME}.txt"
 
 echo "[*] Running convert_tf_idf.py"
 ./convert_tf_idf.py "${PROJECT_NAME}.json" "$PROJECT_NAME"
@@ -51,10 +51,10 @@ echo "[*] Running calculate_notes_graph_features.py"
 ./calculate_notes_graph_features.py "${PROJECT_NAME}.json" "$PROJECT_NAME" "$DATASET_DIR"
 
 echo "[*] Running calculate_vectorized_features.py"
-./calculate_vectorized_features.py "${PROJECT_NAME}.json" "$PROJECT_NAME"
+./calculate_vectorized_features.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_cvf_${PROJECT_NAME}.txt"
 
 echo "[*] Running save_normalized_fold_dataframes.py"
-./save_normalized_fold_dataframes.py "${PROJECT_NAME}.json" "$PROJECT_NAME"
+./save_normalized_fold_dataframes.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_snfd_${PROJECT_NAME}.txt"
 
 echo "[*] Running load_data_to_joblib_memmap.py"
 ./load_data_to_joblib_memmap.py "$PROJECT_NAME"

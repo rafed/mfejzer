@@ -176,7 +176,7 @@ def save_normalized_data(file_prefix, fold_number, fold_testing, fold_training, 
         fold_testing[k] = normalized_df
         normalized_df.to_pickle(file_prefix + '_normalized_testing_fold_' + str(k))
         # print(normalized_df[normalized_df > 1.0].count())
-        # normalized_df.to_csv(f"mew_normalized_df_fold_{k}.csv")
+        normalized_df.to_csv(file_prefix + 'normalized_testing_fold_'+ str(k)+ '.csv')
     info = {'fold_number': fold_number}
     print(info)
     with open(file_prefix + '_fold_info', 'w') as info_file:

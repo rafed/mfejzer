@@ -19,7 +19,7 @@ feature_columns = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9',
                    'f10', 'f11', 'f12', 'f13', 'f14', 'f15', 'f16', 'f17', 'f18', 'f19']
 
 
-def fix_index(fold_testing):
+def fix_index(fold_testing, file_prefix):
     max_level_0 = 0
     max_level_1 = 0
     for fold in fold_testing:
@@ -39,7 +39,7 @@ def fix_index(fold_testing):
         )
 
         # print(f"DataFrame before conversion to float32 for fold {fold}:\n{fold_testing[fold].to_string()}")
-        # fold_testing[fold].to_csv(f"mew_fold_{fold}_before_float32.csv")
+        fold_testing[fold].to_csv(f"{file_prefix}_mew_fold_{fold}_before_float32.csv")
         fold_testing[fold] = fold_testing[fold].astype(np.float32, copy=False)
 
 
@@ -57,9 +57,9 @@ def main():
     fold_number, fold_testing, fold_training = load_data_folds(file_prefix)
 
     eprint(fold_testing[0].info(memory_usage='deep'))
-    fix_index(fold_testing)
+    fix_index(fold_testing, file_prefix)
     eprint(fold_testing[0].info(memory_usage='deep'))
-    fix_index(fold_training)
+    fix_index(fold_training, file_prefix)
 
     try:
         os.mkdir(folder)
