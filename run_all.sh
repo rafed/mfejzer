@@ -15,7 +15,7 @@ DATASET_DIR="../tracking_buggy_files_${PROJECT_NAME}_dataset"
 source ./env3/bin/activate
 
 echo "[*] Running process_bug_reports.py"
-./process_bug_reports.py "$XML_FILE" "$DATASET_DIR" "${PROJECT_NAME}_base.json"
+./process_bug_reports.py "$XML_FILE" "$DATASET_DIR" "${PROJECT_NAME}_base.json" > "mew_pbr_${PROJECT_NAME}.txt"
 
 deactivate
 source ./env2/bin/activate 
@@ -39,16 +39,16 @@ echo "[*] Running vectorize_enriched_api.py"
 ./vectorize_enriched_api.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_ve_${PROJECT_NAME}.txt"
 
 echo "[*] Running convert_tf_idf.py"
-./convert_tf_idf.py "${PROJECT_NAME}.json" "$PROJECT_NAME"
+./convert_tf_idf.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_tfidf_${PROJECT_NAME}.txt"
 
 echo "[*] Running calculate_feature_3.py"
-./calculate_feature_3.py "${PROJECT_NAME}.json" "$PROJECT_NAME"
+./calculate_feature_3.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_cf3_${PROJECT_NAME}.txt"
 
 echo "[*] Running retrieve_features_5_6.py"
-./retrieve_features_5_6.py "${PROJECT_NAME}.json" "$PROJECT_NAME"
+./retrieve_features_5_6.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_56_${PROJECT_NAME}.txt"
 
 echo "[*] Running calculate_notes_graph_features.py"
-./calculate_notes_graph_features.py "${PROJECT_NAME}.json" "$PROJECT_NAME" "$DATASET_DIR"
+./calculate_notes_graph_features.py "${PROJECT_NAME}.json" "$PROJECT_NAME" "$DATASET_DIR" > > "mew_ng_${PROJECT_NAME}.txt"
 
 echo "[*] Running calculate_vectorized_features.py"
 ./calculate_vectorized_features.py "${PROJECT_NAME}.json" "$PROJECT_NAME" > "mew_cvf_${PROJECT_NAME}.txt"
